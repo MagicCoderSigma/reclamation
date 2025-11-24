@@ -1,0 +1,22 @@
+[gd_scene load_steps=2 format=3 uid="uid://cpipxgspakvho"]
+
+[ext_resource type="PackedScene" uid="uid://cs6e6wh1qtsfs" path="res://Rooms/horizontal_1.tscn" id="1_xh068"]
+
+[node name="Vertical1" instance=ExtResource("1_xh068")]
+exitPointOrientation = 1
+roomOrientation = 1
+
+[node name="Area" parent="." index="0"]
+rotation = 1.5707964
+
+[node name="Entry" parent="." index="1"]
+position = Vector2(0, -180)
+
+[node name="Exit" parent="." index="2"]
+position = Vector2(0, 180)
+
+[node name="StaticBody2D" parent="." index="3"]
+rotation = 1.5707964
+
+[node name="StaticBody2D2" parent="." index="4"]
+rotation = -1.5707964

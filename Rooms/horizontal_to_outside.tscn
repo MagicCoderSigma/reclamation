@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://36hlq6it047r"]
+
+[ext_resource type="PackedScene" uid="uid://cs6e6wh1qtsfs" path="res://Rooms/horizontal_1.tscn" id="1_8uci0"]
+
+[node name="HorizontalToOutside" instance=ExtResource("1_8uci0")]
+exitPointOrientation = 0
+exitToRoomType = 1
