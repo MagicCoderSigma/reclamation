@@ -1,0 +1,20 @@
+[gd_scene load_steps=2 format=3 uid="uid://dq6j8d0bbejdx"]
+
+[ext_resource type="PackedScene" uid="uid://bc300fcrl1gru" path="res://Rooms/lobby_1.tscn" id="1_tsdej"]
+
+[node name="Lobby1" instance=ExtResource("1_tsdej")]
+
+[node name="Entry" parent="." index="0"]
+position = Vector2(-226.00002, -90)
+
+[node name="Exit" parent="." index="1"]
+position = Vector2(738, -90)
+
+[node name="CollisionShape2D" parent="StaticBody2D" index="0"]
+position = Vector2(-25.000002, -80)
+
+[node name="CollisionShape2D2" parent="StaticBody2D" index="1"]
+position = Vector2(537, -80)
+
+[node name="CollisionShape2D" parent="StaticBody2D2" index="0"]
+position = Vector2(-459.42477, 11.698731)

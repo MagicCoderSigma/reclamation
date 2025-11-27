@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://devoxo0oj4njp"]
+
+[ext_resource type="PackedScene" uid="uid://cs6e6wh1qtsfs" path="res://Rooms/horizontal_1.tscn" id="1_7hyyh"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1dppp"]
+
+[node name="Horizontal1" instance=ExtResource("1_7hyyh")]
+
+[node name="Entry" parent="." index="0"]
+position = Vector2(-300, -10)
+
+[node name="Exit" parent="." index="1"]
+position = Vector2(300, -10)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." index="2"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" index="0"]
+scale = Vector2(30, 1)
+shape = SubResource("RectangleShape2D_1dppp")

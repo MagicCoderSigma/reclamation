@@ -1,0 +1,5 @@
+[gd_scene load_steps=2 format=3 uid="uid://n5yirswm76mo"]
+
+[ext_resource type="PackedScene" uid="uid://devoxo0oj4njp" path="res://Rooms/lobby_2.tscn" id="1_0xqmx"]
+
+[node name="Horizontal1" instance=ExtResource("1_0xqmx")]

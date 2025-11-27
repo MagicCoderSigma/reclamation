@@ -1,0 +1,41 @@
+[gd_scene load_steps=4 format=3 uid="uid://idup0g7hkggh"]
+
+[ext_resource type="PackedScene" uid="uid://cs6e6wh1qtsfs" path="res://Rooms/horizontal_1.tscn" id="1_3gliy"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3gliy"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_x2q2o"]
+size = Vector2(538, 20)
+
+[node name="IntroRoom" instance=ExtResource("1_3gliy")]
+
+[node name="Entry" parent="." index="0"]
+position = Vector2(-600, 300)
+
+[node name="Floor" type="StaticBody2D" parent="." index="1"]
+position = Vector2(0, 310)
+
+[node name="Collision" type="CollisionShape2D" parent="Floor" index="0"]
+scale = Vector2(60, 1)
+shape = SubResource("RectangleShape2D_3gliy")
+debug_color = Color(0, 1, 0.27450982, 0.41960785)
+
+[node name="Floor3" type="StaticBody2D" parent="." index="2"]
+position = Vector2(0, 310)
+
+[node name="Collision" type="CollisionShape2D" parent="Floor3" index="0"]
+position = Vector2(1680.0001, 226)
+scale = Vector2(60, 1)
+shape = SubResource("RectangleShape2D_3gliy")
+debug_color = Color(0, 1, 0.27450982, 0.41960785)
+
+[node name="Floor2" type="StaticBody2D" parent="." index="3"]
+position = Vector2(0, 310)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor2" index="0"]
+position = Vector2(839.99994, 114.000015)
+rotation = 0.43633232
+shape = SubResource("RectangleShape2D_x2q2o")
+
+[node name="Exit" parent="." index="4"]
+position = Vector2(2280, 526)

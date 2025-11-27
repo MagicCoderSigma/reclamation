@@ -4,37 +4,74 @@ var rng = RandomNumberGenerator.new()
 @export var room_amount: int = 10
 @onready var player: CharacterBody2D = $Player
 
-
-func generateRoom(room: Node2D) -> Node2D:
+func generateRoom(room: Node2D = null, specifiedRoom: PackedScene = null, exitPoint: Node2D = null) -> Array:
 	# TODO: check exit point supported type to specify what room is needed
-	var exitPoint = room.get_node("Exit")
-	# select room category (orientation and type)
-	var roomOrientation = room.exitPointOrientation
-	var roomExitType = room.exitToRoomType
-	var possibleExitRooms = Enums.Rooms[roomOrientation][roomExitType]
+	var specifiedExitPoint: Node2D
 	
-	# get a random index
-	var index = rng.randi_range(0, possibleExitRooms.size()-1)
-	# use that index to get the room
-	var newRoom: Node2D = possibleExitRooms[index].instantiate()
+	if !exitPoint:
+		specifiedExitPoint = room.get_node("Exit")
+	else:
+		specifiedExitPoint = exitPoint
+	
+	var newRoom: Node2D
+	
+	newRoom = specifiedRoom.instantiate()
+	
 	add_child(newRoom)
+	var offset = newRoom.get_node("Entry").position
+	print(specifiedExitPoint)
+	newRoom.global_position = specifiedExitPoint.global_position - offset
 	
-	var entryPoint = newRoom.get_node("Entry")
-	var offset = entryPoint.position
-	
-	newRoom.global_position = exitPoint.global_position - offset
-	return newRoom
+	return [newRoom, newRoom.get_node("Exit")]
 
+func generateRoomGroup(index: int, isFirstRoom: bool, exitPoint: Node2D) -> Array:
+	var lastExitPoint: Node2D
+	
+	if isFirstRoom:
+		lastExitPoint = player
+	else:
+		lastExitPoint = exitPoint
+	
+	var group: Array = Enums.room_groups[index]
+	var result: Array
+	var loopedIndex = 0
+	
+	for room in group:
+		result = generateRoom(null, room, lastExitPoint)
+		loopedIndex += 1
+		
+		if loopedIndex == 1 and isFirstRoom:
+			result[0].position = player.position
+		
+		lastExitPoint = result[1]
+	return result
+
+func randomRoomGeneration(origin: Node2D, placementAmount: int, roomGroup: Array, placeRoomsOnce: bool = true) -> Array:
+	var roomAmount = roomGroup.size()
+	
+	var indexes = []
+	var newIndex = rng.randi_range(0, roomAmount - 1)
+	indexes.append(newIndex)
+	var results = generateRoom(origin, roomGroup[newIndex])
+	origin = results[0]
+	
+	for i in range(placementAmount):
+		var passes = false
+		while passes == false:
+			
+			newIndex = rng.randi_range(0, roomAmount - 1)
+			if indexes.find(newIndex) and !placeRoomsOnce:
+				continue
+			indexes.append(newIndex)
+			passes = true
+		
+		results = generateRoom(origin, roomGroup[newIndex])
+		origin = results[0]
+		
+	return results
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	# get the position of the player
-	var player_position = player.position
 	# create room instance
-	var room: Node2D = Enums.Rooms[0][0][0].instantiate()
-	add_child(room)
-	# place room to player position
-	room.position = player_position
-	
-	for i in range(room_amount):
-		print("Room "+str(i+1)+" instantiating... ")
-		room = generateRoom(room)
+	var result = generateRoomGroup(0, true, null) # intro
+	result = randomRoomGeneration(result[0], 15, Enums.room_groups[2], false) # lobby place
+	result = generateRoomGroup(1, false, result[1]) # hcontainment entrance
